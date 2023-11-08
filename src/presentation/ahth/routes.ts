@@ -1,5 +1,6 @@
 import { Router } from 'express';
 import { AuthController } from './controller';
+import { AuthServices } from '../services/auth.services';
 
 
 
@@ -11,7 +12,8 @@ export class Authroutes {
 
     const router = Router();
 
-    const authController = new AuthController();
+    const authServices = new AuthServices(); 
+    const authController = new AuthController(authServices); 
     
     // Definir las rutas
      router.post('/login', authController.login);
