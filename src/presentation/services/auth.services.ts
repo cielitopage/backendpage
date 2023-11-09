@@ -1,6 +1,6 @@
-import { regularExps } from "../../config";
+import { jwtToken, regularExps } from "../../config";
 import { UserModel } from "../../data";
-import { CustomError, RegisterUserDto, UserEntity } from "../../domain";
+import { CustomError, LoginUserDto, RegisterUserDto, UserEntity } from "../../domain";
 import bcrypt from 'bcryptjs';
 
 
@@ -41,38 +41,43 @@ export class AuthServices {
                 throw CustomError.internalServerError( `${error}`);
             }    
     }
-    
-    // static async loginUser(loginUserDto: LoginUserDto): Promise<LoginUserDto> {
-    
-    //     // Validar el email
-    //     if (!regularExps.email.test(loginUserDto.email)) {
-    //     throw new CustomError('El email no es válido', 400);
-    //     }
-    
-    //     // Validar el password
-    //     if (loginUserDto.password.length < 6) {
-    //     throw new CustomError('El password debe tener al menos 6 caracteres', 400);
-    //     }
-    
-    //     // Validar que el email exista
-    //     const user = await User.findOne({ email: loginUserDto.email });
-    //     if (!user) {
-    //     throw new CustomError('El email no existe', 400);
-    //     }
-    
-    //     // Validar el password
 
-    //     const isMatch = await bcrypt.compare(loginUserDto.password, user.password);
 
-    //     if (!isMatch) {
-    //         throw new CustomError('La contraseña es incorrecta', 400);
-    //     }
+    
+    public async loginUser(loginUserDto: LoginUserDto) {    
+        // Validar el email 
+        if (!regularExps.email.test(loginUserDto.email)) {
+        throw CustomError.badRequest('El email no es válido');
+        }    
+        // Validar que el email exista
+        const user = await UserModel.findOne({ email: loginUserDto.email });
+        if (!user) {
+        throw CustomError.badRequest('El email no existe');
+        }    
+        // Validar el password
+        const validPassword = await bcrypt.compare(loginUserDto.password, user.password);
+        if (!validPassword) {
+        throw CustomError.badRequest('El password no es válido');
+        }
+        const { password, ...userEntity} = UserEntity.fromObject(user);
 
-    //     // Retornar el usuario
+        const token = await jwtToken.createToken({ id: user.id , email: user.email, name: user.name, role: user.role});
 
-    //     return user;
+        if (!token) {
+            throw CustomError.internalServerError('Error al generar el token');
+        }
 
-    // }
+
+
+
+
+
+        // Retornar el usuario
+         return { user: userEntity,
+               token: token
+              };     
+
+    }
 
     // static async validateEmail(email: string): Promise<boolean> {
 
