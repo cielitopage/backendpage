@@ -28,7 +28,7 @@ export class jwtToken {
 
         return new Promise((resolve) => {
 
-            jwt.verify(token, process.env.JWT_SECRET!, (error, decoded) => {
+            jwt.verify(token, JWT_SECRET, (error, decoded) => {
                 if (error) {
                     console.log(error);
                     throw new Error('Error al verificar el token');
@@ -37,7 +37,6 @@ export class jwtToken {
             });
                 });
 
-        return true;
         
     }
 
