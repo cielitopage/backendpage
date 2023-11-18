@@ -1,5 +1,7 @@
 import express, { Router } from 'express';
 import path from 'path';
+var cors = require('cors');
+
 
 interface Options {
   port: number;
@@ -25,8 +27,7 @@ export class Server {
 
   
   
-  async start() {
-    
+  async start() {    
 
     //* Middlewares
     this.app.use( express.json() ); // raw
@@ -34,6 +35,9 @@ export class Server {
 
     //* Public Folder
     this.app.use( express.static( this.publicPath ) );
+
+    //* CORS
+    this.app.use( cors() );
 
     //* Routes
     this.app.use( this.routes );

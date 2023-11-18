@@ -24,19 +24,19 @@ export class jwtToken {
     }
 
 
-    static verifyToken(token: string) {
+    static verifyToken<T>(token: string): Promise<T | null> {
 
-        return new Promise((resolve) => {
+        return new Promise((resolve, reject) => {
 
             jwt.verify(token, JWT_SECRET, (error, decoded) => {
                 if (error) {
                     console.log(error);
-                    throw new Error('Error al verificar el token');
+                    reject(new Error('Invalid token'));
                 }
-                resolve(decoded);
+                resolve(decoded as T);
             });
-                });
 
+        });
         
     }
 
