@@ -18,8 +18,8 @@ export class CategoryRoutes {
     router.get('/', categoryController.getCategories);
     router.get('/:id', categoryController.getCategory);
     router.post('/',[AuthMiddleware.validateToken],categoryController.createCategory);
-    router.put('/:id', categoryController.updateCategory);
-    router.delete('/:id', categoryController.deleteCategory);
+    router.put('/:id',[AuthMiddleware.validateToken], categoryController.updateCategory);
+    router.delete('/:id',[AuthMiddleware.validateToken], categoryController.deleteCategory);
 
 
     return router;

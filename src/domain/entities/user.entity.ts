@@ -3,7 +3,7 @@ import { CustomError } from "../errors/custom.error";
 export class UserEntity {
  
     constructor(
-        public readonly id: string,
+        public readonly id: string,        
         public readonly name: string,
         public readonly email: string,
         public readonly emailVerified: boolean,
@@ -17,7 +17,6 @@ export class UserEntity {
     static fromObject(objeto: { [key: string]: any }) {
 
         const { id,_id, name, email, emailVerified, password, role, created, img } = objeto;
-
 
         if (!id && !_id) {
             throw CustomError.badRequest('Missing id');

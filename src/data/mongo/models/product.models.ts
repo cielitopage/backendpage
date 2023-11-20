@@ -5,6 +5,7 @@ const productSchema = new mongoose.Schema({
     name: {
         type: String,
         required: [true, 'Name is required'],
+        unique: true
     },
     available: {
         type: Boolean,
@@ -40,7 +41,35 @@ const productSchema = new mongoose.Schema({
         default: 'S',
         enum: ['S', 'M', 'L'],
     },
-    
+    new: {
+        type: Boolean,
+        default: true
+    },
+    offer: {
+        type: Number,
+        default: 0
+    },
+    cuotas: {
+        type: Number,
+        default: 0
+    }, 
+    cuotasSinInteres: {
+        type: Number,
+        default: 0
+    },
+    cuotasDecripcion: {
+        type: String,
+    },
+    compra3x2: {
+        type: Boolean,
+        default: false
+    },
+    envio: {
+        type: String,   
+        default: 'gratis',
+        enum: ['gratis', 'pago'],   
+    },
+
     created: {
 
         type: Date,
