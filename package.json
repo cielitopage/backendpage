@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "dev": "tsnd --respawn --clear src/app.ts",
-    "build": "node_modules/.bin/tsc",
+    "build": "tsc",
     "start": "npm run build && node dist/app.js"
   },
   "keywords": [],
