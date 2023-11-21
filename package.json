@@ -4,9 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "tsnd --respawn --clear src/app.ts",
-    "build": "tsc",
-    "start": "npm run build && node dist/app.js"
+    "dev": "ts-node-dev --respawn --transpileOnly ./src/app.ts",
+    "build": "rimraf dist && tsc",
+    "start": "node dist/app.js"
   },
   "keywords": [],
   "author": "",
@@ -19,7 +19,7 @@
     "@types/nodemailer": "^6.4.14",
     "rimraf": "^5.0.5",
     "ts-node-dev": "^2.0.0",
-    "typescript": "^5.2.2"
+    "typescript": "^5.3.2"
   },
   "dependencies": {
     "bcryptjs": "^2.4.3",
